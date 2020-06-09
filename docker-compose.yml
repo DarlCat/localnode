@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  asset-cache:
+    image: nginx
+    volumes:
+     - ./cache:/data/nginx/cache
+     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+     - "80:80"
+    restart: unless-stopped
+    dns: 
+        - 8.8.8.8
+        - 8.8.4.4
