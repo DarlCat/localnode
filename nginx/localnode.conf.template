@@ -1,0 +1,29 @@
+log_format cache_stats '$upstream_cache_status [$time_local] "$request" $status $body_bytes_sent $upstream_response_time';
+proxy_cache_path /data/nginx/cache levels=1:2 keys_zone=STATIC:64m inactive=${CACHE_INACTIVE_PRUNE_INTERVAL} max_size=${CACHE_SIZE};
+
+server {
+    listen          80;
+    server_name     ${CACHE_UPSTREAM_ENDPOINT};
+    server_tokens   off;
+
+    location / {
+        proxy_pass             http://${CACHE_UPSTREAM_ENDPOINT};
+        proxy_set_header       Host $host;
+        proxy_buffering        off;
+        proxy_buffer_size      128k;
+        proxy_buffers          100 128k;
+        proxy_cache            STATIC;
+        proxy_cache_valid      200 ${CACHE_TTL};
+        proxy_cache_use_stale  error timeout invalid_header updating http_500 http_502 http_503 http_504;
+        proxy_ignore_headers   Expires;
+        proxy_ignore_headers   "Cache-Control";
+        proxy_force_ranges     on;
+    }
+
+    location /ping {
+        return  200 "pong";
+    }
+
+    access_log  /data/nginx/logs/cache.log          cache_stats;
+    error_log   /data/nginx/logs/cache.error.log    warn;
+}
