@@ -20,6 +20,10 @@ server {
         proxy_force_ranges     on;
     }
 
+    location /favicon.ico {
+        root /data/nginx/webroot;
+    }
+
     location /ping {
         return  200 "pong";
     }
