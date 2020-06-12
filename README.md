@@ -1,6 +1,8 @@
 # Localnode
 
-Localnode is a configuration atop Nginx which acts as an additional cache layer for the Second Life asset CDN. The intended purpose is to alleviate slowdowns caused by geography or locale, and ease the pain of clearing your viewer cache for development or stability purposes. Setup and maintenance are intended to be easy and straightforward.
+Localnode is a configuration atop Nginx which acts as an additional cache layer for the Second Life asset CDN. The intended purpose is to alleviate slowdowns caused by geography or locale, ease the pain of clearing your viewer cache for development or stability purposes, and decrease WAN bandwidth usage by avoiding multiple SL CDN requests for the same resource.
+
+**A note about content theft**: I shouldn't have to say this, but this system does not enable or make easier the act of "copybotting" or stealing content, it simply serves as a cache layer to speed up content loading in the viewer. Cache files are not stored in a human-readable format, nor are they mapped to their asset UUID. This is identical in purpose and form to the SL viewer cache itself, it just sits in another location and is usable by a network of users.
 
 ## Requirements
 
