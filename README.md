@@ -1,11 +1,11 @@
 # Localnode
 
-Localnode is an configuration atop Nginx which acts as an additional cache layer for the Second Life asset CDN. The intended purpose is to alleviate slowdowns caused by geography or locale, and ease the pain of clearing your viewer cache for development or stability purposes. Setup and maintenance are intended to be easy and straightforward.
+Localnode is a configuration atop Nginx which acts as an additional cache layer for the Second Life asset CDN. The intended purpose is to alleviate slowdowns caused by geography or locale, and ease the pain of clearing your viewer cache for development or stability purposes. Setup and maintenance are intended to be easy and straightforward.
 
 ## Requirements
 
 1. Ability to modify name resolution for the Second Life CDN endpoint
-2. Docker, and docker-compose compatible with compose file version 3.3 or higher
+2. Docker version 17.06.0 or higher, and support for compose file format version 3.3 or higher
 3. Availability of port 80 on your Docker host (Required for SL viewer compatibility)
 
 ## Setup
@@ -16,9 +16,11 @@ Localnode is an configuration atop Nginx which acts as an additional cache layer
 2. Run `docker-compose up -d` within the repo directory
 3. Verify that the application is running by visiting <http://localhost:80>
 
+After completing these steps, you are ready to proceed to the DNS setup phase.
+
 ### DNS
 
-For requests to the SL Assets CDN to be passed through localnode, it is important that `asset-cdn.glb.agni.lindenlab.com` resolves to your Docker host using one of the following methods:
+For requests to the SL Assets CDN to be passed through localnode, it is important that `asset-cdn.glb.agni.lindenlab.com` resolves to your Docker host using one of the following methods, and then verify that the reroute works by visiting <http://asset-cdn.glb.agni.lindenlab.com/ping> and checking for the "pong" text. (SL CDN will show "Incorrect Syntax" if you did not complete the DNS setup correctly.)
 
 #### Hosts entry
 
@@ -35,3 +37,15 @@ Add the following line to the end of your hosts file, replacing `<ip>` with your
 #### DNS server record
 
 If you host your own DNS server, it is likely that you are able to insert custom records. It's impossible to include documentation for every DNS server here, so look up the instructions for your system and follow them.
+
+### Troubleshooting / FAQ
+
+**Q**: I've completed both the app and DNS setups, but assets aren't loading in my viewer after I restart my viewer.
+
+**A**: Confirm that the QA steps in both setups are passing, you probably forgot one, or the application is not running.
+
+&nbsp;
+
+**Q**: My cache directory does not seem to be populating.
+
+**A**: First, try restarting your viewer if it was running during setup. If that does not resolve this, if running on Linux or macOS, verify your UNIX permissions are configured correctly. If on Windows, verify that the filesystem location is shared with Docker Desktop.
