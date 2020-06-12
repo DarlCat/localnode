@@ -14,6 +14,7 @@ server {
         proxy_buffers          100 128k;
         proxy_cache            STATIC;
         proxy_cache_valid      200 ${CACHE_TTL};
+        proxy_cache_valid      404 ${CACHE_TTL};
         proxy_cache_use_stale  error timeout invalid_header updating http_500 http_502 http_503 http_504;
         proxy_ignore_headers   Expires;
         proxy_ignore_headers   "Cache-Control";
