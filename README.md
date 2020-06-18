@@ -7,7 +7,7 @@ Localnode is a configuration atop Nginx which acts as an additional cache layer 
 ## Requirements
 
 1. Ability to modify name resolution for the Second Life CDN endpoint
-2. Docker version 17.06.0 or higher, and support for compose file format version 3.3 or higher
+2. Docker version 17.06.0 or higher, and support for compose file format version 3.4 or higher
 3. Availability of port 80 on your Docker host (Required for SL viewer compatibility)
 
 ## Setup
