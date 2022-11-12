@@ -18,6 +18,8 @@ services:
             CACHE_UPSTREAM_ENDPOINT: asset-cdn.glb.agni.lindenlab.com
         restart: unless-stopped
         container_name: localnode
+        # Note: This required in the case that you use a custom DNS server, so that the application itself can globally resolve the upstream endpoint
+        # You do not need to utilize Google DNS for this, just a resolver that won't cause the container to loopback on itself.
         dns: 
             - 8.8.8.8
             - 8.8.4.4
