@@ -16,6 +16,7 @@ services:
             CACHE_TTL: 1y
             CACHE_INACTIVE_PRUNE_INTERVAL: 15d
             CACHE_UPSTREAM_ENDPOINT: asset-cdn.glb.agni.lindenlab.com
+            CACHE_LOCAL_ENDPOINT: localnode.local
         restart: unless-stopped
         container_name: localnode
         # Note: This required in the case that you use a custom DNS server, so that the application itself can globally resolve the upstream endpoint

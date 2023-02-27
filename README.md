@@ -34,7 +34,17 @@ The hosts file takes priority over the DNS resolver, but it is compatible with p
 
 Add the following line to the end of your hosts file, replacing `<ip>` with your Docker host IP
 
-`<ip> asset-cdn.glb.agni.lindenlab.com`
+```text
+<ip> asset-cdn.glb.agni.lindenlab.com
+<ip> localnode.local
+```
+
+#### Environment variable override (Required for WSL-backed Docker on Windows)
+
+Set the following environment variable for your user
+
+`VIEWERASSET` to equal `http://localnode.local`
+
 
 #### DNS server record
 
