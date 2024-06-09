@@ -12,9 +12,9 @@ services:
         ports:
             - "80:80"
         environment: 
-            CACHE_SIZE: 24g
+            CACHE_SIZE: 64g
             CACHE_TTL: 1y
-            CACHE_INACTIVE_PRUNE_INTERVAL: 15d
+            CACHE_INACTIVE_PRUNE_INTERVAL: 90d
             CACHE_UPSTREAM_ENDPOINT: asset-cdn.glb.agni.lindenlab.com
             CACHE_LOCAL_ENDPOINT: localnode.local
         restart: unless-stopped

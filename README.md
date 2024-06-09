@@ -39,12 +39,34 @@ Add the following line to the end of your hosts file, replacing `<ip>` with your
 <ip> localnode.local
 ```
 
-#### Environment variable override (Required for WSL-backed Docker on Windows)
+#### Environment variable override (Required for WSL-backed Docker on Windows, optional elsewhere)
 
-Set the following environment variable for your user
+Set the following environment variable `VIEWERASSET` for your OS user to equal one of the following:
 
-`VIEWERASSET` to equal `http://localnode.local`
+- If using default port 80
+  - `http://localnode.local`
+- If using a nonstandard port, e.g. 8080
+  - `http://localnode.local:8080`
 
+On Liunux you can accomplish this by ading a linke like the following to your viewer startup wrapper:
+
+```shell
+export VIEWERASSET='http://localnode.local:8081'
+```
+
+or if using system-d the following may be written to `~/.config/environment.d/localnode-asset-cache.conf`
+
+```conf
+VIEWERASSET='http://localnode.local:8081'
+```
+
+To load system-d enviroment changes you must run
+
+```shell
+systemctl --user set-environment
+```
+
+Note: Trailing slashes should not be added as they will cause the viewer to attempt to grab invalid and unanticipated URLs.
 
 #### DNS server record
 
@@ -61,3 +83,12 @@ If you host your own DNS server, it is likely that you are able to insert custom
 **Q**: My cache directory does not seem to be populating.
 
 **A**: First, try restarting your viewer if it was running during setup. If that does not resolve this, if running on Linux or macOS, verify your UNIX permissions are configured correctly. If on Windows, verify that the filesystem location is shared with Docker Desktop.
+
+&nbsp;
+
+**Q**: I use WSL-backed Docker on Windows, how can I know that my viewer is using localnode?
+
+**A**: You can check this by reviewing your viewer log file, you should see something like the following:
+
+```log
+2024-01-28T19:49:16Z WARNING #Texture# newview/lltexturefetch.cpp(1565) doWork : Texture missing from server (404): http://localnode.local:8081/?texture_id=ee4fb0db-e611-1015-e46c-dc88dc7fbb25```
